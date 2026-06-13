@@ -1,0 +1,284 @@
+<script>
+    var bladderLevel = 0
+    var bladderCapacity = 100
+    var bladderPercentage = 0
+    var bladderMax = 100
+    var lemonade = 0
+    var cup = 1
+    var cupPrice = 1
+    var soda = 0
+    var sodaPrice = 2
+    var coffee = 0
+    var coffeePrice = 5
+    var girlfriend = 0
+    var girlfriendPrice = 10
+    var sacrifice = 0
+    var sacrificePrice = 50
+
+    function update(){
+        bladderPercentage = bladderLevel / bladderCapacity
+        document.getElementById("bladderStatus").innerHTML = "Bladder Level: " + Math.round(bladderLevel) + "/" + Math.round(bladderCapacity) +"ml"
+        document.getElementById("lemonadeCount").innerHTML = "'Lemonade': " + Math.round(lemonade)
+        document.getElementById("cupCount").innerHTML = "Cups: " + cup
+        document.getElementById("cupPriceDisplay").innerHTML = "Cup price: " + cupPrice
+        document.getElementById("sodaCount").innerHTML = "Soda: " + soda
+        document.getElementById("sodaPriceDisplay").innerHTML = "Soda price: " + sodaPrice
+        document.getElementById("coffeeCount").innerHTML = "Coffee: " + coffee
+        document.getElementById("coffeePriceDisplay").innerHTML = "Coffee price: " + coffeePrice
+        document.getElementById("girlfriendCount").innerHTML = "Girlfriends: " + girlfriend
+        document.getElementById("girlfriendPriceDisplay").innerHTML = "Lemonade needed to charm a girl: " + girlfriendPrice
+    }   
+
+    function drink(){
+        if (bladderLevel > (bladderCapacity) - 1){
+            wet()
+        }
+        else{
+        bladderLevel += cup
+        update()
+        }
+    }
+
+    function pee(){
+        setBladderMax()
+        if (bladderPercentage >= 0.2){
+            bladderLevel = 0
+            if (bladderCapacity >= 101){
+                if (sacrifice > 0){
+                bladderCapacity = Math.round(bladderCapacity *= 0.8)
+                }
+                else{
+                    bladderCapacity = Math.round(bladderCapacity *= 0.98)
+                }
+            }
+            document.getElementById("activity").innerHTML = "You sit on the toilet and let your pee trickle into the bowl. You think about how good it would have felt if you had just held it in a little longer."
+            document.getElementById("stickIcon").src="images/stickPee.png"
+        }
+        else{
+            document.getElementById("activity").innerHTML = "You sit on the toilet but you can't pee."
+            document.getElementById("stickIcon").src="images/stickPee.png"
+        }
+        update()
+    }
+
+    function wet(){
+        setBladderMax()
+        bladderLevel = 0
+        if (bladderMax > (bladderCapacity * 1.2)){
+            bladderCapacity = Math.round(bladderCapacity *= 1.20)
+        }
+        else{
+            bladderCapacity = Math.round(bladderCapacity *= 1.05)
+        }
+        lemonade += 1 + girlfriend
+        document.getElementById("activity").innerHTML = "You just can't hold it anymore! You quickly grab a glass and hold it up to your peehole before letting your poor bladder gush away."
+        document.getElementById("stickIcon").src="images/stickWet.png"
+        update()
+        }
+
+    function setBladderMax(){
+        if (bladderCapacity > bladderMax){
+            bladderMax = bladderCapacity
+        }
+    }
+    
+    function buyCup(){
+        if (lemonade >= cupPrice){
+            cup += 1
+            lemonade -= cupPrice
+            cupPrice += 1
+            document.getElementById("activity").innerHTML = "You bought a cup."
+        }
+        else{
+        document.getElementById("activity").innerHTML = "You don't have enough lemonade to buy another cup."
+        }
+        update()
+    }
+
+    function buySoda(){
+        if (lemonade >= sodaPrice){
+            soda += 1
+            lemonade -= sodaPrice
+            sodaPrice += 2
+            document.getElementById("activity").innerHTML = "You happily drink the soda."
+            document.getElementById("stickIcon").src="images/stickDrink.png"
+        }
+        else{
+        document.getElementById("activity").innerHTML = "You don't have enough lemonade to buy soda."
+        }
+        update()
+    }
+
+    function buyCoffee(){
+        if (lemonade >= coffeePrice){
+            coffee += 1
+            lemonade -= coffeePrice
+            coffeePrice = (coffeePrice * 2) - 2
+            setInterval(sodaTimer, (200 / (coffee + 1)))
+            document.getElementById("activity").innerHTML = "You sip away at your coffee."
+            document.getElementById("stickIcon").src="images/stickCoffee.png"
+        }
+        else{
+        document.getElementById("activity").innerHTML = "You don't have enough lemonade to buy coffee."
+        }
+        update()
+    }
+
+    function buyGirlfriend(){
+        if (lemonade >= girlfriendPrice){
+            girlfriend += 1
+            lemonade -= girlfriendPrice
+            girlfriendPrice *= 2
+            document.getElementById("activity").innerHTML = "You lovingly embrace your new girlfriend."
+            document.getElementById("stickIcon").src="images/stickGirlfriend.png" 
+        }
+        else{
+        document.getElementById("activity").innerHTML = "You don't have enough lemonade to charm a girl with."
+        }
+        update()
+    }
+
+    function doSacrifice(){
+        if (sacrifice > 0){
+        document.getElementById("activity").innerHTML = "You have already performed a sacrifice."
+        }
+        else if (lemonade >= sacrificePrice){
+            sacrifice += 1
+            lemonade -= sacrificePrice
+            sacrificePrice = (sacrificePrice * 2) + 10
+            document.getElementById("activity").innerHTML = "You sacrifice your 'lemonade' to Poseidon."
+            document.getElementById("sacrificePriceDisplay").innerHTML = "You have already performed a sacrifice."
+            document.getElementById("stickIcon").src="images/stickSacrifice.png"
+        }
+        else{
+        document.getElementById("activity").innerHTML = "You don't have enough lemonade to sacrifice."
+        }
+        update()
+    }
+
+    function sodaTimer(){
+        if (bladderLevel > (bladderCapacity) - 1){
+            wet()
+        }
+        else{
+        bladderLevel += soda
+        update()
+        }
+    }
+    setInterval(sodaTimer, 200)
+
+    function bladderActivityTimer(){
+        switch(true){
+            case bladderPercentage <= 0.19:
+                break;
+            case bladderPercentage <= 0.4:    
+                document.getElementById("activity").innerHTML = "You start to feel a little pressure in your bladder."
+                document.getElementById("stickIcon").src="images/stickDesp2.png"
+                break;
+            case bladderPercentage <= 0.6:    
+                document.getElementById("activity").innerHTML = "Your urge has become constant, it's always in the back of your mind even if you try to distract yourself."
+                document.getElementById("stickIcon").src="images/stickDesp3.png"
+                break;
+            case bladderPercentage <= 0.8:
+                document.getElementById("activity").innerHTML = "Your bladder is starting to feel heavy. You know you should get to a toilet soon."
+                document.getElementById("stickIcon").src="images/stickDesp4.png"
+                break;
+            case bladderPercentage <= 1:
+                document.getElementById("activity").innerHTML = "You're bursting. Your bladder feels like a bowling ball in your abdomen. You need to pee now!"
+                document.getElementById("stickIcon").src="images/stickDesp5.png"
+                break;
+        }
+        update()
+    }
+    setInterval(bladderActivityTimer, 1)
+</script>
+
+<html>
+    <head>
+        <title>Lemonade Game</title>
+        <style>
+            #game{
+                float: left;
+                text-align: center;
+                margin-left: 100px;
+            }
+
+            #shop{
+                float: right;
+                text-align: center;
+                margin-right: 100px;
+            }
+
+            #stats{
+                text-align: center;
+            }
+
+            body{
+                font-family: Arial;
+                font-weight: 900;
+            }
+
+            p{
+                margin: 0
+            }
+        </style>
+    </head>
+    <body>
+        <div id="stats">
+            <h1><p id="activity">You feel like making some lemonade.</p></h1>
+            <h2>
+                <p id="lemonadeCount">'Lemonade': 0</p>
+                <p id="cupCount">Cups: 1</p>
+                <p id="sodaCount">Soda: 0</p>
+                <p id="coffeeCount">Coffee: 0</p>
+                <p id="girlfriendCount">Girlfriends: 0</p>
+            </h2>
+        </div>
+        <div id="game">
+            <h2>
+                <p id="bladderStatus">Bladder Level: 0/100ml</p>
+            </h2>
+            <a href="#" onClick="drink()"><img src="images/cup.png" width="200" height="200"></a>
+            <a href="#" onClick="pee()"><img src="images/toilet.png" width="200" height="200"></a>  
+            <br>
+            Click the cup to fill your bladder or click the toilet to empty it!
+            <br>
+            Every time your bladder reaches full capacity you make 'lemonade'.
+            <br>
+            When you make 'lemonade', your bladder stretches and it's capacity increases.
+            <br>
+            You can shrink your bladder by peeing when you don't <i>really</i> need to go.  
+            <br><br><br>
+            <img src="images/stickDesp1.png" id="stickIcon">
+        </div>
+        <div id="shop">
+            <h2>Shop</h2>
+            <button><a href="#" onClick="buyCup()">Buy cup</a></button>
+            <p id="cupPriceDisplay">Cup price: 1</p>
+            Another cup to drink from.<br>
+            It increases how much pee is made from one sip.
+            <br><br>
+            <button><a href="#" onClick="buySoda()">Buy soda</a></button>
+            <p id="sodaPriceDisplay">Soda price: 2</p>
+            Soda is a diuretic.<br> 
+            It increases your bladder level by 5ml per second.
+            <br><br>
+            <button><a href="#" onClick="buyCoffee()">Buy coffee</a></button>
+            <p id="coffeePriceDisplay">Coffee price: 5</p>
+            Coffee and soda don't mix.<br> 
+            That is, if you don't want to be peeing constantly.<br>
+            Coffee multiplies the pee gained from soda.
+            <br><br>
+            <button><a href="#" onClick="buyGirlfriend()">Charm girl</a></button>
+            <p id="girlfriendPriceDisplay">Lemonade needed to charm a girl: 15</p>
+            A sweet girl with even sweeter pee!<br>
+            She will very kindly help you make lemonade with her own special recipe.<br>
+            As long as you charm her with some of yours first ;).
+            <br><br>
+            <button><a href="#" onClick="doSacrifice()">Perform sacrifice</a></button>
+            <p id="sacrificePriceDisplay">Lemonade needed for sacrifice: 50</p>
+            Sacrifice some 'lemonade' to Poseidon.<br>
+            In return, Poseidon will greatly increase the amount your bladder shrinks by peeing when you don't <i>really</i> have to go.
+        </div>
+    </body>   
+</html>
