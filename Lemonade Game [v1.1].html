@@ -52,11 +52,11 @@
                 }
             }
             document.getElementById("activity").innerHTML = "You sit on the toilet and let your pee trickle into the bowl. You think about how good it would have felt if you had just held it in a little longer."
-            document.getElementById("stickIcon").src="images/stickPee.png"
+            document.getElementById("stickIcon").src="stickPee.png"
         }
         else{
             document.getElementById("activity").innerHTML = "You sit on the toilet but you can't pee."
-            document.getElementById("stickIcon").src="images/stickPee.png"
+            document.getElementById("stickIcon").src="stickPee.png"
         }
         update()
     }
@@ -101,7 +101,7 @@
             lemonade -= sodaPrice
             sodaPrice += 2
             document.getElementById("activity").innerHTML = "You happily drink the soda."
-            document.getElementById("stickIcon").src="images/stickDrink.png"
+            document.getElementById("stickIcon").src="stickDrink.png"
         }
         else{
         document.getElementById("activity").innerHTML = "You don't have enough lemonade to buy soda."
@@ -116,7 +116,7 @@
             coffeePrice = (coffeePrice * 2) - 2
             setInterval(sodaTimer, (200 / (coffee + 1)))
             document.getElementById("activity").innerHTML = "You sip away at your coffee."
-            document.getElementById("stickIcon").src="images/stickCoffee.png"
+            document.getElementById("stickIcon").src="stickCoffee.png"
         }
         else{
         document.getElementById("activity").innerHTML = "You don't have enough lemonade to buy coffee."
@@ -130,7 +130,7 @@
             lemonade -= girlfriendPrice
             girlfriendPrice *= 2
             document.getElementById("activity").innerHTML = "You lovingly embrace your new girlfriend."
-            document.getElementById("stickIcon").src="images/stickGirlfriend.png" 
+            document.getElementById("stickIcon").src="stickGirlfriend.png" 
         }
         else{
         document.getElementById("activity").innerHTML = "You don't have enough lemonade to charm a girl with."
@@ -148,7 +148,7 @@
             sacrificePrice = (sacrificePrice * 2) + 10
             document.getElementById("activity").innerHTML = "You sacrifice your 'lemonade' to Poseidon."
             document.getElementById("sacrificePriceDisplay").innerHTML = "You have already performed a sacrifice."
-            document.getElementById("stickIcon").src="images/stickSacrifice.png"
+            document.getElementById("stickIcon").src="stickSacrifice.png"
         }
         else{
         document.getElementById("activity").innerHTML = "You don't have enough lemonade to sacrifice."
@@ -173,19 +173,19 @@
                 break;
             case bladderPercentage <= 0.4:    
                 document.getElementById("activity").innerHTML = "You start to feel a little pressure in your bladder."
-                document.getElementById("stickIcon").src="images/stickDesp2.png"
+                document.getElementById("stickIcon").src="stickDesp2.png"
                 break;
             case bladderPercentage <= 0.6:    
                 document.getElementById("activity").innerHTML = "Your urge has become constant, it's always in the back of your mind even if you try to distract yourself."
-                document.getElementById("stickIcon").src="images/stickDesp3.png"
+                document.getElementById("stickIcon").src="stickDesp3.png"
                 break;
             case bladderPercentage <= 0.8:
                 document.getElementById("activity").innerHTML = "Your bladder is starting to feel heavy. You know you should get to a toilet soon."
-                document.getElementById("stickIcon").src="images/stickDesp4.png"
+                document.getElementById("stickIcon").src="stickDesp4.png"
                 break;
             case bladderPercentage <= 1:
                 document.getElementById("activity").innerHTML = "You're bursting. Your bladder feels like a bowling ball in your abdomen. You need to pee now!"
-                document.getElementById("stickIcon").src="images/stickDesp5.png"
+                document.getElementById("stickIcon").src="stickDesp5.png"
                 break;
         }
         update()
